@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 void gerarcpf(int n){ // n = quantidade CPFS pra serem gerados.
     for(int i = 0; i < n; i++){
@@ -25,16 +26,45 @@ void gerarcpf(int n){ // n = quantidade CPFS pra serem gerados.
         resto = soma % 11;
         digitoscpf[10] = (resto < 2) ? 0 : (11 - resto);
 
+    
         for(int i = 0; i < 11; i++){
             printf("%d", digitoscpf[i]);
         }
     printf("\n");
 }}
 
+int validarCPF(const char cpf[]){
+    int dv1, dv2, resto = 0, soma = 0;
+    for(int i = 0; i < 9; i++){
+        soma+= (cpf[i]-'0')*(10-i);
+    }
+    resto = (soma % 11) < 2? 0 : 11-(soma%11);
+    dv1 = resto;
+    if(dv1 != cpf[9]-'0'){
+        return 0;
+    }
+    soma = 0;
+    resto = 0;
+    for(int i = 0; i < 10; i++){
+        soma+= (cpf[i]-'0')*(11-i);
+    }
+    resto = (soma % 11) < 2? 0 : 11-(soma%11);
+    dv2 = resto;
+    if(dv2 != cpf[10]-'0'){
+        return 0;
+    }
+    
+    return 1;
+}
 int main(){
     srand(time(NULL));
     
-    gerarcpf(0);
-    
+    char cpf[12] = "07138388179";
+    if(validarCPF(cpf)){
+        printf("CPF valido: %s\n", cpf);
+    }else{
+        printf("CPF invalido: %s\n", cpf);
+    }
+
     return 0;
 }
