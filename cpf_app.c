@@ -35,7 +35,12 @@ void gerarcpf(int n){ // n = quantidade CPFS pra serem gerados.
 
 int validarCPF(const char cpf[]){
     int dv1, dv2, resto = 0, soma = 0;
-    for(int i = 0; i < 9; i++){
+
+    if(strlen(cpf) != 11){//validação do tamanho
+        return 0;
+    }
+
+    for(int i = 0; i < 9; i++){ //validação primeiro digito verificador
         soma+= (cpf[i]-'0')*(10-i);
     }
     resto = (soma % 11) < 2? 0 : 11-(soma%11);
@@ -43,9 +48,10 @@ int validarCPF(const char cpf[]){
     if(dv1 != cpf[9]-'0'){
         return 0;
     }
+
     soma = 0;
     resto = 0;
-    for(int i = 0; i < 10; i++){
+    for(int i = 0; i < 10; i++){//validação segundo digito verificador
         soma+= (cpf[i]-'0')*(11-i);
     }
     resto = (soma % 11) < 2? 0 : 11-(soma%11);
@@ -59,7 +65,7 @@ int validarCPF(const char cpf[]){
 int main(){
     srand(time(NULL));
     
-    char cpf[12] = "07138388179";
+    char cpf[12] = "0713838819";
     if(validarCPF(cpf)){
         printf("CPF valido: %s\n", cpf);
     }else{
