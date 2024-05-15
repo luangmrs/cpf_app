@@ -4,7 +4,7 @@
 #include <string.h>
 #include <conio.h>
 
-void gerarcpf(char* cpf){ // n = quantidade CPFS pra serem gerados.
+void gerarCPF(char* cpf){ // n = quantidade CPFS pra serem gerados.
     int digitoscpf[11];
     int resto, soma = 0;
 
@@ -29,8 +29,7 @@ void gerarcpf(char* cpf){ // n = quantidade CPFS pra serem gerados.
     for(int i = 0; i < 11; i++){ // Formatando como string;
         cpf[i] = digitoscpf[i] + '0';
     }
-    cpf[11] = '\0';
-    
+    cpf[11] = '\0'; 
 }
 
 int validarCPF(const char cpf[]){
@@ -77,15 +76,12 @@ int main(){
     printf("Pressione enter para continuar...");
     getchar();
     
-    
-    
     printf("\n1 - Gerador de CPF.\n");
     printf("2 - Validador de CPF.\n");
     printf("Escolha a opcao desejada: ");
     scanf("%c", &opcao);
     getchar();
     
-
     switch (opcao)
     {
     case '1':
@@ -97,7 +93,7 @@ int main(){
             return 1;
         }
          for (int i = 0; i < qtdcpfs; i++){
-            gerarcpf(cpf);
+            gerarCPF(cpf);
             fprintf(arq, "%s\n", cpf);
         }
         printf("%d CPFs gerados e salvos em 'output.txt'.\n", qtdcpfs);
