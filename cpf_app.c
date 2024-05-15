@@ -5,6 +5,7 @@
 
 void gerarcpf(int n){ // n = quantidade CPFS pra serem gerados.
     for(int i = 0; i < n; i++){
+        
         int digitoscpf[11];
         int resto, soma = 0;
         
@@ -34,6 +35,7 @@ void gerarcpf(int n){ // n = quantidade CPFS pra serem gerados.
 }}
 
 int validarCPF(const char cpf[]){
+
     int dv1, dv2, resto = 0, soma = 0;
 
     if(strlen(cpf) != 11){//validação do tamanho
@@ -62,14 +64,47 @@ int validarCPF(const char cpf[]){
     
     return 1;
 }
+
 int main(){
     srand(time(NULL));
+    char opcao, cpf[12];
+    int qtdcpfs;
+
+    printf("Seja bem vindo ao CPF APP!\n");
+    printf("Atencao as observacoes:\n(1) - Os CPFs gerados sairao no arquivo 'output.txt'.\n");
+    printf("(2) - Os CPFs a serem validados devem estar no arquivo 'input.txt'.\n");
+    printf("(3) - Os CPFs a serem validados devem ser apenas numeros, sem caracteres.\n");
+    printf("Pressione enter para continuar...");
+    getchar();
+    system("cls");
     
-    char cpf[12] = "0713838819";
-    if(validarCPF(cpf)){
-        printf("CPF valido: %s\n", cpf);
-    }else{
-        printf("CPF invalido: %s\n", cpf);
+    printf("Escolha a opcao desejada:\n");
+    printf("1 - Gerador de CPF.\n");
+    printf("2 - Validador de CPF.\n");
+    printf(": ");
+    scanf("%c", &opcao);
+    getchar();
+
+    switch (opcao)
+    {
+    case '1':
+        printf("Digite quantos CPFs a serem gerados: ");
+        scanf("%d", &qtdcpfs);
+        gerarcpf(qtdcpfs);
+        break;
+    case '2':
+        printf("Digite o CPF a ser validado: ");
+        scanf("%11s", cpf);
+        if(validarCPF(cpf)){
+            printf("CPF valido: %s\n", cpf);
+        }else{
+            printf("CPF invalido: %s\n", cpf);
+        }
+        break;
+    
+    default:
+        printf("Opcao invalida.");
+        break;
     }
 
     return 0;
