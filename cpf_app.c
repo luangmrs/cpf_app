@@ -67,12 +67,13 @@ int main(){
     srand(time(NULL));
     char opcao, cpf[12];
     int qtdcpfs;
-    FILE *arq;
+    FILE *arq, *arq_resultado;
 
     printf("Seja bem vindo ao CPF APP!\n");
     printf("Atencao as observacoes:\n(1) - Os CPFs gerados sairao no arquivo 'output.txt'.\n");
     printf("(2) - Os CPFs a serem validados devem estar no arquivo 'input.txt'.\n");
     printf("(3) - Os CPFs a serem validados devem ser apenas numeros, sem caracteres.\n");
+    printf("(4) - Os resultado da validacao dos CPFs estarao no arquivo 'result.txt'.\n");
     printf("Pressione enter para continuar...");
     getchar();
     
@@ -97,16 +98,31 @@ int main(){
             fprintf(arq, "%s\n", cpf);
         }
         printf("%d CPFs gerados e salvos em 'output.txt'.\n", qtdcpfs);
+        fclose(arq);
         break;
 
     case '2':
-        printf("Digite o CPF a ser validado: ");
-        scanf("%11s", cpf);
-        if(validarCPF(cpf)){
-            printf("CPF valido: %s\n", cpf);
-        }else{
-            printf("CPF invalido: %s\n", cpf);
+        arq = fopen("input.txt", "r");
+        arq_resultado = fopen("result.txt", "w");
+        if(arq == NULL){
+            printf("Problema ao ler o arquivo.");
+            return 1;
         }
+        if(arq){
+            while(!feof(arq)){
+                fgets(cpf, sizeof(cpf), arq);
+                cpf[strcspn(cpf, "\n")] = '\0';
+                if (strlen(cpf) > 0){
+                    if(validarCPF(cpf)){
+                        fprintf(arq_resultado, "CPF valido: %s\n", cpf);
+                    }else{
+                        fprintf(arq_resultado, "CPF invalido: %s\n", cpf);
+                    }
+                }
+            }
+        }
+        fclose(arq_resultado);
+        fclose(arq);
         break;
     
     default:
