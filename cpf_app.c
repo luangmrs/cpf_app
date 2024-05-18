@@ -4,7 +4,7 @@
 #include <string.h>
 #include <conio.h>
 
-void gerarCPF(char* cpf){ // n = quantidade CPFS pra serem gerados.
+void gerarCPF(char* cpf){ 
     int digitoscpf[11];
     int resto, soma = 0;
 
